@@ -84,7 +84,7 @@ public class Libro {
     @Override
     public String toString() {
         // modifica el formato de fecha
-        String fecha = fechaUltimaEdicion.format(DateTimeFormatter.ofPattern("dd/MM/yy"));
+        String fecha = fechaUltimaEdicion.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         // retorna el libro en formato String de manera ordenada y usando espacio entre lineas
         return "Titulo: " + titulo + "\n" +
                 "Autor: " + autor + "\n" +
