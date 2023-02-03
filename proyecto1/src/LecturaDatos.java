@@ -11,7 +11,29 @@ import java.util.stream.Collectors;
 public class LecturaDatos {
 
     //Propiedades
+    private String fileName;
+    private List<Libro> libros;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+
+    //Constructor
+    public LecturaDatos(String fileName) {
+        this.fileName = fileName;
+        this.libros = readFromFile(fileName);
+    }
+
+    //Getters y Setters
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public List<Libro> getLibros() {
+        return libros;
+    }
 
     //Metodos
     public List<Libro> readFromFile(String fileName) {
