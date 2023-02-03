@@ -1,4 +1,7 @@
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -32,12 +35,21 @@ public class App {
         System.out.println("-----------------------------");
 
         //4.
-
-
-
-
-
-
+        //using streams, create a list of maps with the author as a key and the list of books as a value
+        List<Map<String, List<Libro>>> listaMapas = libros.stream().collect(Collectors.groupingBy(Libro::getAutor)).entrySet().stream().map(e -> {
+            Map<String, List<Libro>> mapa = new HashMap<>();
+            mapa.put(e.getKey(), e.getValue());
+            return mapa;
+        }).collect(Collectors.toList());
+        //using streams, print the list of maps, but only the author and the date of edition in order first by author and then by date
+        listaMapas.stream().sorted((m1, m2) -> m1.keySet().stream().findFirst().get().compareTo(m2.keySet().stream().findFirst().get())).forEach(m -> {
+            m.entrySet().stream().forEach(e -> {
+                System.out.println("Autor: " + e.getKey());
+                e.getValue().stream().sorted((l1, l2) -> l1.getFechaUltimaEdicion().compareTo(l2.getFechaUltimaEdicion())).forEach(l -> System.out.println("Fecha de edición: " + l.getFechaUltimaEdicion()));
+                System.out.println(" ");
+            });
+        });
+        System.out.println("-----------------------------");
 
         
     }

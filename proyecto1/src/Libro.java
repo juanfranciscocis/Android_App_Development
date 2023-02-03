@@ -106,6 +106,24 @@ public class Libro {
                 "Palabras claves: " + palabrasClaves + "\n");
     }
 
+    // solo autor y año de ultima edicion
+    public void imprimirAutorFecha() {
+        String fecha = fechaUltimaEdicion.format(DateTimeFormatter.ofPattern("yyyy"));
+        System.out.println( "Autor: " + autor + "\n" +
+                "Fecha de ultima edicion: " + fecha + "\n");
+    }
+
+    // solo fecha 
+    public void imprimirFecha() {
+        String fecha = fechaUltimaEdicion.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        System.out.println( "Fecha de ultima edicion: " + fecha + "\n");
+    }
+
+    // solo titulo
+    public void imprimirTitulo() {
+        System.out.println( "Titulo: " + titulo + "\n");
+    }
+
 
 
 
