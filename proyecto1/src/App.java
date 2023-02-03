@@ -2,8 +2,8 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        LecturaDatos readWriteFile = new LecturaDatos("proyecto2/proyecto1/src/datos.txt");
-        List<Libro> libros = readWriteFile.readFromFile("proyecto2/proyecto1/src/datos.txt");
+        LecturaDatos readWriteFile = new LecturaDatos();
+        List<Libro> libros = readWriteFile.readFromFile("proyecto1/src/datos.txt");
         
         //1.
         //Using stream print the list 
