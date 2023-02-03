@@ -77,11 +77,33 @@ public class Libro {
         this.palabrasClaves = palabrasClaves;
     }
 
-    //Métodos    
+    //Métodos   
+    
+    
     //toString
     @Override
     public String toString() {
-        return "Libro{" + "ISBN=" + ISBN + ", titulo=" + titulo + ", autor=" + autor + ", ediciones=" + ediciones + ", fechaUltimaEdicion=" + fechaUltimaEdicion + ", palabrasClaves=" + palabrasClaves + '}';
+        // modifica el formato de fecha
+        String fecha = fechaUltimaEdicion.format(DateTimeFormatter.ofPattern("dd/MM/yy"));
+        // retorna el libro en formato String de manera ordenada y usando espacio entre lineas
+        return "Titulo: " + titulo + "\n" +
+                "Autor: " + autor + "\n" +
+                "ISBN: " + ISBN + "\n" +
+                "Ediciones: " + ediciones + "\n" +
+                "Fecha de ultima edicion: " + fecha + "\n" +
+                "Palabras claves: " + palabrasClaves + "\n";
+    }
+
+    // solo autor y palabras claves
+    public void imprimirAutorClaves() {
+        System.out.println( "Autor: " + autor + "\n" +
+                "Palabras claves: " + palabrasClaves + "\n");
+    }
+
+    // solo titulo y palabras claves
+    public void imprimirTituloClaves() {
+        System.out.println( "Titulo: " + titulo + "\n" +
+                "Palabras claves: " + palabrasClaves + "\n");
     }
 
 
