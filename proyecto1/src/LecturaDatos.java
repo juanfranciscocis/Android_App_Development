@@ -25,7 +25,7 @@ public class LecturaDatos {
                 String[] valores = line.split(",");
                 List<String> palabrasClave = Arrays.asList(valores[5].split("\\s+"));
                 LocalDate fecha = LocalDate.parse(valores[4], formatter);
-                return new Libro(valores[0], valores[1], valores[2], Integer.parseInt(valores[3]), fecha, palabrasClave);
+                return new Libro(valores[0], valores[1], valores[2], Integer.parseInt(valores[3]), fecha, palabrasClave,Float.parseFloat(valores[6]));
             }).collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();

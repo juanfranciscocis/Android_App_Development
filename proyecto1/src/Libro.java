@@ -2,6 +2,7 @@
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Libro {
@@ -12,9 +13,10 @@ public class Libro {
    private int ediciones;
    private LocalDate fechaUltimaEdicion;
    private List<String> palabrasClaves;
+   private float precio;
 
     //Constructor
-    public Libro(String titulo, String autor,String ISBN ,int ediciones, LocalDate fechaUltimaEdicion, List<String> palabrasClaves) {
+    public Libro(String titulo, String autor,String ISBN ,int ediciones, LocalDate fechaUltimaEdicion, List<String> palabrasClaves, float price) {
         this.ISBN = ISBN;
         this.titulo = titulo;
         this.autor = autor;
@@ -26,6 +28,11 @@ public class Libro {
             throw new IllegalArgumentException("La lista de palabras claves debe tener al menos 4 elementos");
         }
         this.palabrasClaves = palabrasClaves;
+
+        if(price < 0){
+            throw new IllegalArgumentException("El precio del libro es menor que $0");
+        }
+        this.precio = price;
     }
 
     //Getters y Setters
@@ -77,9 +84,21 @@ public class Libro {
         this.palabrasClaves = palabrasClaves;
     }
 
+    public float getPrecio(){
+        return precio;
+    }
+
+    public void setPrecio(float precio){
+        this.precio = precio;
+    }
+
+    //get only year
+    public int getAno(){
+        return fechaUltimaEdicion.getYear();
+    }
+
+
     //Métodos   
-    
-    
     //toString
     @Override
     public String toString() {
@@ -94,19 +113,21 @@ public class Libro {
                 "Palabras claves: " + palabrasClaves + "\n";
     }
 
-    // solo autor y palabras claves
+
+
+    // imprimir solo autor y palabras claves
     public void imprimirAutorClaves() {
         System.out.println( "Autor: " + autor + "\n" +
                 "Palabras claves: " + palabrasClaves + "\n");
     }
 
-    // solo titulo y palabras claves
+    // imprimir solo titulo y palabras claves
     public void imprimirTituloClaves() {
         System.out.println( "Titulo: " + titulo + "\n" +
                 "Palabras claves: " + palabrasClaves + "\n");
     }
 
-    // solo autor y año de ultima edicion
+    // imprimir solo autor y año de ultima edicion
     public void imprimirAutorFecha() {
         String fecha = fechaUltimaEdicion.format(DateTimeFormatter.ofPattern("yyyy"));
         System.out.println( "Autor: " + autor + "\n" +
@@ -123,6 +144,27 @@ public class Libro {
     public void imprimirTitulo() {
         System.out.println( "Titulo: " + titulo + "\n");
     }
+
+    //imprimir titulo con isbn
+    public void imprimirTituloISBN() {
+        System.out.println( "Titulo: " + titulo + "\n" + 
+        "ISBN: " + ISBN + "\n");
+    }
+
+    //imprimir titulo con isbn
+    public void imprimirTituloISBNLista() {
+        System.out.println( "Titulo: " + titulo + "\n" + 
+        "ISBN: " + ISBN + "\n" + "Lista:" + palabrasClaves +  "\n");
+    }
+
+    //imprimir titulo con isbn
+    public void imprimirAutorLista() {
+        System.out.println( "Autor: " + autor + "\n" + 
+        "Lista:" + palabrasClaves +  "\n");
+    }
+
+
+    
 
 
 

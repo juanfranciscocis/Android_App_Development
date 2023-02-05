@@ -1,20 +1,20 @@
-"Cien años de soledad",Gabriel García Márquez,9583004875,1,06/06/1967,Magia Realismo Misticismo Colombia
-"El amor en los tiempos del cólera",Gabriel García Márquez,9583004883,1,01/01/1942,Amor Literatura Colombia Siglo XX
-"Rayuela",Julio Cortázar,9580605434,1,14/07/1963,Experimentalismo Surrealismo Argentina Siglo XX
-"La muerte de Artemio Cruz",Carlos Fuentes,9583001563,1,05/02/1962,México Literatura Siglo XX Modernismo
-"Pedro Páramo",Juan Rulfo,9580607558,1,01/01/1955,Realismo Mágico México Siglo XX Literatura
-"El otoño del patriarca",Gabriel García Márquez,9583004891,1,20/09/1975,Patriarca Literatura Magia Colombia Siglo XX
-"La naranja mecánica",Anthony Burgess,9580605442,1,02/02/1962,Ficción Futurista Inglaterra Siglo XX Violencia
-"Cien sonetos de amor",Pablo Neruda,9583001571,1,01/12/1959,Amor Poemas Literatura Chile Siglo XX
-"El principito",Antoine de Saint-Exupéry,9580607566,1,06/04/1943,Infantil Filosofía Francia Siglo XX
-"Más allá del amor",Milan Kundera,9583004883,1,15/11/2000,Amor Literatura Checoslovaquia Siglo XX Exilio
-"La región más transparente",Carlos Fuentes,9583001571,1,05/06/1958, Literatura México Siglo XX Modernismo Identidad
-"El jardín de senderos que se bifurcan",Jorge Luis Borges,9583004891,1,01/01/1941, Literatura Argentina Siglo XX Surrealismo Filosofía
-"El tunel",Ernesto Sabato, 9580607566,1,01/05/1948, Literatura Argentina Siglo XX Existencialismo Desesperación
-"Los pasos perdidos",Alejo Carpentier, 9583004867,1,01/01/1953, Literatura Cuba Siglo XX Modernismo Música
-"La casa de los espíritus",Isabel Allende, 9580605426,1,01/01/1982, Literatura Chile Magia Feminismo Siglo XX
-"El extranjero",Albert Camus, 9583004875,1,01/01/1942,Literatura Francia Siglo XX Existencialismo Absurdo
-"El amor en los tiempos del cólera",Gabriel García Márquez, 9583004883,1,01/01/1985, Literatura Colombia Siglo XX Amor
-"La ciudad y los perros",Mario Vargas Llosa, 9583001563,1,01/01/1963, Literatura Perú Siglo XX Modernismo|
-"La casa de Bernarda Alba",Federico García Lorca, 9580605434,1,01/01/1936, Literatura España Siglo XX Teatro
-"La metamorfosis",Franz Kafka, 9580607558,1,01/01/1915,Literatura Alemania Siglo XX Surrealismo Absurdo
+Cien años de soledad,Gabriel García Márquez,9583004875,35,06/06/1967,Magia Realismo Misticismo Colombia,23.50
+El amor en los tiempos del cólera,Gabriel García Márquez,9583004883,63,01/01/1942,Amor Literatura Colombia Siglo XX,43.99
+Rayuela,Julio Cortázar,9580605434,13,14/07/1963,Experimentalismo Surrealismo Argentina Siglo XX,22.54
+La muerte de Artemio Cruz,Carlos Fuentes,9583001563,16,05/02/1962,México Literatura Siglo XX Modernismo,17.90
+Pedro Páramo,Juan Rulfo,9580607558,55,01/01/1955,Realismo Mágico México Siglo XX Literatura,34.17
+El otoño del patriarca,Gabriel García Márquez,9583004891,44,20/09/1975,Patriarca Literatura Magia Colombia Siglo XX Poder,40.58
+La naranja mecánica,Anthony Burgess,9580605442,28,02/02/1962,Ficción Futurista Inglaterra Siglo XX Violencia,18.50
+Cien sonetos de amor,Pablo Neruda,9583001571,33,01/12/1959,Amor Poemas Literatura Chile Siglo XX,9.99
+El principito,Antoine de Saint-Exupéry,9580607566,18,06/04/1943,Infantil Filosofía Francia Siglo XX,11.15
+Más allá del amor,Milan Kundera,9583004883,74,15/11/2000,Amor Literatura Checoslovaquia Siglo XX Exilio,31.85
+La región más transparente,Carlos Fuentes,9583001571,89,05/06/1958,Literatura México Siglo XX Modernismo Identidad,15.50
+El jardín de senderos que se bifurcan,Jorge Luis Borges,9583004891,103,01/01/1941,Literatura Argentina Siglo XX Surrealismo Filosofía,12.99
+El tunel,Ernesto Sabato,9580607566,10,01/05/1948,Literatura Argentina Siglo XX Existencialismo Desesperación,16.40
+Los pasos perdidos,Alejo Carpentier,9583004867,5,01/01/1953,Literatura Cuba Siglo XX Modernismo Música,27.53
+La casa de los espíritus,Isabel Allende,9580605426,94,01/01/1982,Literatura Chile Magia Feminismo Siglo XX,50.10
+El extranjero,Albert Camus,9583004875,53,01/01/1942,Literatura Francia Siglo XX Existencialismo Absurdo,40.00
+El amor en los tiempos del cólera,Gabriel García Márquez,9583004883,25,01/01/1985,Literatura Colombia Siglo XX Amor,11.67
+La ciudad y los perros,Mario Vargas Llosa,9583001563,42,01/01/1963,Literatura Perú Siglo XX Modernismo Planificacion,21.66
+La casa de Bernarda Alba,Federico García Lorca,9580605434,57,01/01/1936,Literatura España Siglo XX Teatro,35.45
+La metamorfosis,Franz Kafka,9580607558,91,01/01/1915,Literatura Alemania Siglo XX Surrealismo Absurdo,13.84

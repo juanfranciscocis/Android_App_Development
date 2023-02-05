@@ -1,10 +1,16 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class App {
     public static void main(String[] args) throws Exception {
+        //1.
         LecturaDatos leerDatos = new LecturaDatos();
         List<Libro> libros = leerDatos.leerDesdeArchivo("proyecto1/src/datos.txt");
         
@@ -53,7 +59,7 @@ public class App {
 
         //6.
         //using streams, create a list of maps with the year as a key and the list of books as a value
-        List<Map<Integer, List<Libro>>> listaMapasAno = libros.stream().collect(Collectors.groupingBy(Libro::getYear)).entrySet().stream().map(e -> {
+        List<Map<Integer, List<Libro>>> listaMapasAno = libros.stream().collect(Collectors.groupingBy(Libro::getAno)).entrySet().stream().map(e -> {
             Map<Integer, List<Libro>> mapa = new HashMap<>();
             mapa.put(e.getKey(), e.getValue());
             return mapa;
@@ -67,12 +73,36 @@ public class App {
             });
         });
 
-        //7.
-        System.out.println(" ");
-        System.out.println("LISTA DE LIBROS QUE COMIENZAN CON LA LETRA P");
         System.out.println("-----------------------------");
-        // using streams get the list of books that have two or more titles with the  "p or P" letter at the beginning of the word
+
+        //7.
+        System.out.println("IMPRESION DE LA LISTA DE LIBROS ORDENADA POR ISBN Y PALABRAS CLAVES QUE TIENEN MAS DE DOS P");
+        System.out.println("-----------------------------");
+        //using streams, compare the list of key words looking for the ones that start with P and sort them by their ISBN number
+        List<Libro> result = libros.stream()
+            .filter(b -> b.getPalabrasClaves().stream().filter(k -> k.startsWith("p")|| k.startsWith("P")).count() >= 2).collect(Collectors.toList());
+
+            result = result.stream().sorted((i1,i2)-> i1.getISBN().compareTo(i2.getISBN())).collect(Collectors.toList());
+
+            result.forEach(l -> l.imprimirTituloISBNLista());
+
+
+        System.out.println("-----------------------------");
+        //8.
+        System.out.println("IMPRESION DE LA LISTA DE LIBROS ORDENADA POR AUTOR Y PALABRAS CLAVES QUE NO TIENEN MAS DE DOS P");
+        System.out.println("-----------------------------");
+        //using streams, compare the list of key words that do not have words starting with P and sorting them by author
        
+        List<Libro> result2 = libros.stream()
+        .filter(b -> b.getPalabrasClaves().stream().noneMatch(k -> k.startsWith("p")|| k.startsWith("P"))).collect(Collectors.toList());
+
+        result2 = result2.stream().sorted((i1,i2)-> i1.getAutor().compareTo(i2.getAutor())).collect(Collectors.toList());
+
+        result2.forEach(l -> l.imprimirAutorLista());
+     
+       
+
+
 
         
 
