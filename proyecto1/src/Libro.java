@@ -1,5 +1,3 @@
-
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -92,7 +90,7 @@ public class Libro {
         this.precio = precio;
     }
 
-    //get only year
+    //get solo del año
     public int getAno(){
         return fechaUltimaEdicion.getYear();
     }
@@ -157,16 +155,10 @@ public class Libro {
         "ISBN: " + ISBN + "\n" + "Lista:" + palabrasClaves +  "\n");
     }
 
-    //imprimir titulo con isbn
+    //imprimir autor con lista de palabras clave
     public void imprimirAutorLista() {
         System.out.println( "Autor: " + autor + "\n" + 
         "Lista:" + palabrasClaves +  "\n");
     }
-
-
-    
-
-
-
 
 }
