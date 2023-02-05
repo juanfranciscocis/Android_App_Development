@@ -108,7 +108,8 @@ public class Libro {
                 "ISBN: " + ISBN + "\n" +
                 "Ediciones: " + ediciones + "\n" +
                 "Fecha de ultima edicion: " + fecha + "\n" +
-                "Palabras claves: " + palabrasClaves + "\n";
+                "Palabras claves: " + palabrasClaves + "\n" +
+                "Precio: " + precio + "\n";
     }
 
 
