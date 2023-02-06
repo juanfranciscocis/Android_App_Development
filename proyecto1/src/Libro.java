@@ -10,7 +10,7 @@ public class Libro {
    private String autor;
    private int ediciones;
    private LocalDate fechaUltimaEdicion;
-   private List<String> palabrasClaves;
+   private List<String> palabrasClaves = new ArrayList<>();
    private float precio;
 
     //Constructor
