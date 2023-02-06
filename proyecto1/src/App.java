@@ -92,10 +92,18 @@ public class App {
         List<Libro> result = libros.stream()
             .filter(b -> b.getPalabrasClaves().stream().filter(k -> k.startsWith("p")|| k.startsWith("P")).count() >= 2).collect(Collectors.toList());
 
-            result = result.stream().sorted((i1,i2)-> i1.getISBN().compareTo(i2.getISBN())).collect(Collectors.toList());
+        result = result.stream().sorted((i1,i2)-> i1.getISBN().compareTo(i2.getISBN())).collect(Collectors.toList());
 
-            result.forEach(l -> l.imprimirTituloISBNLista());
+        final List<String> palabrasP = result.stream().flatMap(b -> b.getPalabrasClaves().stream()).filter(k -> k.startsWith("p")|| k.startsWith("P")).collect(Collectors.toList());
 
+        result = result.stream().map(b -> {
+            b.setPalabrasClaves(palabrasP);
+            return b;
+        }).collect(Collectors.toList());
+
+      
+ 
+        result.forEach(l -> l.imprimirTituloISBNLista());
 
         System.out.println("-----------------------------");
 
