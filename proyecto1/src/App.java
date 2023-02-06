@@ -3,22 +3,18 @@
 //Proyecto 1 - Streams y Lambdas
 //Fecha: 07/02/2023
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class App {
     public static void main(String[] args) throws Exception {
         //1.
         //Se crea un objeto de la clase LecturaDatos y se llama al método leerDesdeArchivo
-        LecturaDatos leerDatos = new LecturaDatos();
-        List<Libro> libros = leerDatos.leerDesdeArchivo("proyecto1/src/datos.txt");
+        Datos leerDatos = new Datos();
+        List<Libro> libros = leerDatos.leerDesdeArchivo("datos.txt");
         
         //2.
         //Utilizando streams, se imprime la lista de libros
@@ -94,16 +90,18 @@ public class App {
 
         result = result.stream().sorted((i1,i2)-> i1.getISBN().compareTo(i2.getISBN())).collect(Collectors.toList());
 
-        final List<String> palabrasP = result.stream().flatMap(b -> b.getPalabrasClaves().stream()).filter(k -> k.startsWith("p")|| k.startsWith("P")).collect(Collectors.toList());
+        result.forEach(libro -> {
+            System.out.println("ISBN " + libro.getISBN() + ": ");
+            libro.getPalabrasClaves().stream().filter(keyword -> keyword.toLowerCase().contains("p"))
+                                    .forEach(keyword -> System.out.println(keyword));
+            System.out.println(" ");
+        });
 
-        result = result.stream().map(b -> {
-            b.setPalabrasClaves(palabrasP);
-            return b;
-        }).collect(Collectors.toList());
 
-      
- 
-        result.forEach(l -> l.imprimirTituloISBNLista());
+       
+        
+
+
 
         System.out.println("-----------------------------");
 
