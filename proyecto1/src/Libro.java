@@ -4,36 +4,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Libro {
-    //Propiedades
-   private String ISBN;
-   private String titulo;
-   private String autor;
-   private int ediciones;
-   private LocalDate fechaUltimaEdicion;
-   private List<String> palabrasClaves = new ArrayList<>();
-   private float precio;
+    // Propiedades
+    private String ISBN;
+    private String titulo;
+    private String autor;
+    private int ediciones;
+    private LocalDate fechaUltimaEdicion;
+    private List<String> palabrasClaves = new ArrayList<>();
+    private float precio;
 
-    //Constructor
-    public Libro(String titulo, String autor,String ISBN ,int ediciones, LocalDate fechaUltimaEdicion, List<String> palabrasClaves, float price) {
+    // Constructor
+    public Libro(String titulo, String autor, String ISBN, int ediciones, LocalDate fechaUltimaEdicion,
+            List<String> palabrasClaves, float price) {
         this.ISBN = ISBN;
         this.titulo = titulo;
         this.autor = autor;
         this.ediciones = ediciones;
         // check formato de fecha dd/MM/yy
         this.fechaUltimaEdicion = fechaUltimaEdicion;
-        //Lista de palabras claves no menor a 4, si es menor, error
-        if(palabrasClaves.size() < 4){
+        // Lista de palabras claves no menor a 4, si es menor, error
+        if (palabrasClaves.size() < 4) {
             throw new IllegalArgumentException("La lista de palabras claves debe tener al menos 4 elementos");
         }
         this.palabrasClaves = palabrasClaves;
 
-        if(price < 0){
+        if (price < 0) {
             throw new IllegalArgumentException("El precio del libro es menor que $0");
         }
         this.precio = price;
     }
 
-    //Getters y Setters
+    // Getters y Setters
     public String getISBN() {
         return ISBN;
     }
@@ -82,27 +83,27 @@ public class Libro {
         this.palabrasClaves = palabrasClaves;
     }
 
-    public float getPrecio(){
+    public float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio){
+    public void setPrecio(float precio) {
         this.precio = precio;
     }
 
-    //get solo del año
-    public int getAno(){
+    // get solo del año
+    public int getAno() {
         return fechaUltimaEdicion.getYear();
     }
 
-
-    //Métodos   
-    //toString
+    // Métodos
+    // toString
     @Override
     public String toString() {
         // modifica el formato de fecha
         String fecha = fechaUltimaEdicion.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        // retorna el libro en formato String de manera ordenada y usando espacio entre lineas
+        // retorna el libro en formato String de manera ordenada y usando espacio entre
+        // lineas
         return "Titulo: " + titulo + "\n" +
                 "Autor: " + autor + "\n" +
                 "ISBN: " + ISBN + "\n" +
@@ -112,54 +113,52 @@ public class Libro {
                 "Precio: " + precio + "\n";
     }
 
-
-
     // imprimir solo autor y palabras claves
     public void imprimirAutorClaves() {
-        System.out.println( "Autor: " + autor + "\n" +
+        System.out.println("Autor: " + autor + "\n" +
                 "Palabras claves: " + palabrasClaves + "\n");
     }
 
     // imprimir solo titulo y palabras claves
     public void imprimirTituloClaves() {
-        System.out.println( "Titulo: " + titulo + "\n" +
+        System.out.println("Titulo: " + titulo + "\n" +
                 "Palabras claves: " + palabrasClaves + "\n");
     }
 
     // imprimir solo autor y año de ultima edicion
     public void imprimirAutorFecha() {
         String fecha = fechaUltimaEdicion.format(DateTimeFormatter.ofPattern("yyyy"));
-        System.out.println( "Autor: " + autor + "\n" +
+        System.out.println("Autor: " + autor + "\n" +
                 "Fecha de ultima edicion: " + fecha + "\n");
     }
 
-    // solo fecha 
+    // solo fecha
     public void imprimirFecha() {
         String fecha = fechaUltimaEdicion.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        System.out.println( "Fecha de ultima edicion: " + fecha + "\n");
+        System.out.println("Fecha de ultima edicion: " + fecha + "\n");
     }
 
     // solo titulo
     public void imprimirTitulo() {
-        System.out.println( "Titulo: " + titulo + "\n");
+        System.out.println("Titulo: " + titulo + "\n");
     }
 
-    //imprimir titulo con isbn
+    // imprimir titulo con isbn
     public void imprimirTituloISBN() {
-        System.out.println( "Titulo: " + titulo + "\n" + 
-        "ISBN: " + ISBN + "\n");
+        System.out.println("Titulo: " + titulo + "\n" +
+                "ISBN: " + ISBN + "\n");
     }
 
-    //imprimir titulo con isbn
+    // imprimir titulo con isbn
     public void imprimirTituloISBNLista() {
-        System.out.println( "Titulo: " + titulo + "\n" + 
-        "ISBN: " + ISBN + "\n" + "Lista:" + palabrasClaves +  "\n");
+        System.out.println("Titulo: " + titulo + "\n" +
+                "ISBN: " + ISBN + "\n" + "Lista:" + palabrasClaves + "\n");
     }
 
-    //imprimir autor con lista de palabras clave
+    // imprimir autor con lista de palabras clave
     public void imprimirAutorLista() {
-        System.out.println( "Autor: " + autor + "\n" + 
-        "Lista:" + palabrasClaves +  "\n");
+        System.out.println("Autor: " + autor + "\n" +
+                "Lista:" + palabrasClaves + "\n");
     }
 
 }

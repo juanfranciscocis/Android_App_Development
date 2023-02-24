@@ -51,7 +51,18 @@ public class MyThreads2 {
 		endTime = System.currentTimeMillis();
 		System.out.printf("\nSuma Secuencial: %d toma: %d miliscd\n",total,
 		 endTime - startTime);	
-		System.out.printf("\nThreads - seq=: %d \n",counterThread.getTotalGeneral()-total);	
+	System.out.printf("\nThreads - seq=: %d \n",counterThread.getTotalGeneral()-total);	
 	}
+
+ 
+
+
+	
+
+
+
+
+
+
 
 }

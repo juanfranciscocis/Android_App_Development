@@ -19,7 +19,7 @@ public class MyThreadsExecutor {
 		counterThread c4 = new counterThread(3*INTERVAL+1,MAXNUMBER,1);
 	    counterThread.threadMessage("--> Existen " + Thread.activeCount() + " Threads");
 		 
-		ExecutorService executorService = Executors.newCachedThreadPool();//newFixedThreadPool(4); 
+		ExecutorService executorService = Executors.newFixedThreadPool(4);//newFixedThreadPool(4); 
 		
 		
 		executorService.execute(c4);
@@ -28,24 +28,21 @@ public class MyThreadsExecutor {
 		executorService.execute(c1);
 		counterThread.threadMessage("--> Existen " + Thread.activeCount() + " Threads");
 		
-		executorService.shutdown();
-		
-        try {
-           // wait  for both writers to finish executing
-           boolean tasksEnded =  executorService.awaitTermination(5000, TimeUnit.MILLISECONDS); // TimeUnit.MINUTES);
 
-           if (tasksEnded) {
-	   		long endTimeT = System.currentTimeMillis();
-	   		System.out.printf("Suma via Executor: %d toma: %d miliscd\n\n", counterThread.getTotalGeneral(), endTimeT - startTime);		
-          }   
-           else {
-              System.out.println(
-                 "Timed out while waiting for tasks to finish.");
-           } 
-        } 
-        catch (InterruptedException ex) {
-           ex.printStackTrace();
-        }
+		
+		
+		executorService.shutdown();
+
+           // wait  for both writers to finish executing
+        while(!executorService.isTerminated()){
+			System.out.println("ESTOY EN PROCESO");
+
+		}
+
+          
+	   	long endTimeT = System.currentTimeMillis();
+	   	System.out.printf("Suma via Executor: %d toma: %d miliscd\n\n", counterThread.getTotalGeneral(), endTimeT - startTime);		
+   
 
 		
 		// Calcula de manera secuencial

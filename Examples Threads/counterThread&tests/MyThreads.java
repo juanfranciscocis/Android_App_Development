@@ -23,7 +23,7 @@ public class MyThreads {
 		T3.start();  
 		T4.start();  
 		
-		counterThread.threadMessage("--> Existen " + Thread.activeCount() + " Threads");
+		counterThread.threadMessage("--> Existen " + Thread.activeCount() + " Threads"); // main tiene su propio proceso
 		
 		try{
   			T1.join();
