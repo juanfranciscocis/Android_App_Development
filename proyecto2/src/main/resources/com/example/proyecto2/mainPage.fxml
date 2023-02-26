@@ -25,6 +25,8 @@
             </Label>
             <TextField fx:id="tasksUsuario" layoutX="302.0" layoutY="37.0" prefHeight="26.0" prefWidth="252.0" style="-fx-background-color: #d6d4d4;" />
             <Button fx:id="botonCalcular" layoutX="240.0" layoutY="70.0" mnemonicParsing="false" onAction="#buttonPressed" style="-fx-background-radius: 5; -fx-background-color: #757575;" text="CALCULAR" textFill="WHITE" />
+            <Label fx:id="calculandoThreads" layoutX="31.0" layoutY="75.0" prefHeight="17.0" prefWidth="186.0" textFill="WHITE" />
+            <Label fx:id="calculandoSerial" layoutX="335.0" layoutY="75.0" prefHeight="17.0" prefWidth="186.0" textFill="WHITE" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="14.0" layoutY="137.0" prefHeight="254.0" prefWidth="331.0" style="-fx-background-radius: 10; -fx-background-color: #4f4f4f; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);">
@@ -36,8 +38,8 @@
             </Label>
             <TableView fx:id="tablaResultadoTask" layoutX="22.0" layoutY="43.0" prefHeight="201.0" prefWidth="285.0" style="-fx-background-color: #d6d4d4;">
               <columns>
-                <TableColumn prefWidth="75.0" style="-fx-text-fill: white;" text="C1" />
-                <TableColumn prefWidth="209.0" text="C2" />
+                <TableColumn prefWidth="75.0" style="-fx-text-fill: white;" text="C1" visible="false" />
+                <TableColumn prefWidth="209.0" text="C2" visible="false" />
               </columns>
             </TableView>
          </children>
@@ -51,8 +53,8 @@
             </Label>
             <TableView fx:id="tablaResultadoSerial" layoutX="22.0" layoutY="43.0" prefHeight="201.0" prefWidth="285.0" style="-fx-background-color: #d6d4d4;">
                <columns>
-                  <TableColumn prefWidth="75.0" text="C1" />
-                  <TableColumn prefWidth="209.0" text="C2" />
+                  <TableColumn prefWidth="75.0" text="C1" visible="false" />
+                  <TableColumn prefWidth="209.0" text="C2" visible="false" />
                </columns>
             </TableView>
          </children>
