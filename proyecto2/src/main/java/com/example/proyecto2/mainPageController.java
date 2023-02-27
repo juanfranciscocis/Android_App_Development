@@ -49,21 +49,108 @@ public class mainPageController {
     @FXML
     private Label totalSecondsThreads;
 
+    public ArrayList<Factorial> listaTasks = new ArrayList<Factorial>();
+
+    public Boolean isFinished = false;
+
+    ObservableList<Map<String, String>> items = FXCollections.<Map<String,String>>observableArrayList();
+
+
+
     @FXML
     void buttonPressed(ActionEvent event) {
         int numeroFactorial = Integer.parseInt(factorialUsuario.getText());
         int numeroTasks = Integer.parseInt(tasksUsuario.getText());
         System.out.println("Factorial: " + numeroFactorial + " Tasks: " + numeroTasks);
 
-        calculandoThreads.setText("Calculando ...");
-        calculandoSerial.setText("Calculando ...");
-        corriendoConTask(numeroFactorial, numeroTasks);
-        corriendoSerial(numeroFactorial);
+        //calculandoThreads.setText("Calculando ...");
+        //calculandoSerial.setText("Calculando ...");
+        //corriendoConTask(numeroFactorial, numeroTasks);
+        //corriendoSerial(numeroFactorial);
+
+        tableViewCreator(tablaResultadoTask);
+        tablaResultadoTask.setItems(items);
+
+
+
+        calcThreads(numeroFactorial, numeroTasks);
+
+    }
+
+    private boolean allThreadsFinished() {
+        for (Factorial f : listaTasks) {
+            if (!f.isDone()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void calcThreads(int numeroFactorial, int numeroTasks){
+
+        int[] rango = factorialNumeroTask(numeroFactorial, numeroTasks);
+        for (int i = 0; i < rango.length; i++) {
+            System.out.println("Rango:"+rango[i]);
+        }
+
+
+        int inicio = 1;
+        ArrayList<Thread> listaThreads = new ArrayList<Thread>();
+        for (int i = 0; i < numeroTasks; i++) {
+            int fin = inicio + rango[i] - 1;
+            Factorial f = new Factorial(BigInteger.valueOf(inicio), BigInteger.valueOf(fin));
+            inicio = fin + 1;
+
+            f.messageProperty().addListener((observable,oldValue,newValue)->{
+                // Factorial
+                f.item.remove("Factorial");
+                f.item.put("Factorial",String.valueOf(newValue));
+                f.item.remove("Task");
+                f.item.put("Task",String.valueOf(f.id));
+
+                items.add(f.item);
+                tablaResultadoTask.refresh();
+            });
+            f.valueProperty().addListener((observable,oldValue,newValue)->{
+                //Tiempo
+                f.item.remove("Tiempo Milisegundos");
+                f.item.put("Tiempo Milisegundos",String.valueOf(newValue));
+
+                items.add(f.item);
+                tablaResultadoTask.refresh();
+            });
+            listaTasks.add(f);
+
+            listaThreads.add(new Thread(f));
+            listaThreads.get(i).setDaemon(true);
+            listaThreads.get(i).start();
+
+        }
+
 
 
 
 
     }
+
+    @FXML
+    void mostrarTotales(ActionEvent event) {
+        long totalTiempo = 0;
+        BigInteger totalFactorial = BigInteger.valueOf(1);
+        for (Factorial f : listaTasks) {
+            totalTiempo += f.tiempo;
+            totalFactorial = totalFactorial.multiply(f.subTotal);
+        }
+        totalSecondsThreads.setText("Total Milisegundos: " + totalTiempo);
+        totalThreads.setText("Total Threads: " + totalFactorial);
+        listaTasks.removeAll(listaTasks);
+
+    }
+
+
+
+
+
 
 
 
@@ -178,6 +265,20 @@ public class mainPageController {
         tableViewUpdater(tablaResultadoTask, listaTasks);
         totalThreads.setText("Total Calculado: " + String.valueOf(total));
 
+
+    }
+
+    void tableViewCreator(TableView tableView){
+        TableColumn columna1 = new TableColumn("Task");
+        columna1.setCellValueFactory(new MapValueFactory<>("Task"));
+        TableColumn columna2 = new TableColumn("Factorial");
+        columna2.setCellValueFactory(new MapValueFactory<>("Factorial"));
+        TableColumn columna3 = new TableColumn("Tiempo Milisegundos");
+        columna3.setCellValueFactory(new MapValueFactory<>("Tiempo Milisegundos"));
+
+        tableView.getColumns().add(columna1);
+        tableView.getColumns().add(columna2);
+        tableView.getColumns().add(columna3);
 
     }
 
