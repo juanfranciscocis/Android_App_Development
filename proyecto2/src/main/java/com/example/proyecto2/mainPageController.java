@@ -1,7 +1,9 @@
 package com.example.proyecto2;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -33,43 +35,41 @@ public class mainPageController {
     private TableView<Map<String, String>> tablaResultadoTask;
 
     @FXML
+    private Label totalThreads;
+
+    @FXML
+    private Label totalSerial;
+
+    @FXML
     private TextField tasksUsuario;
 
     @FXML
+    private Label totalMilisecondsSerial;
+
+    @FXML
+    private Label totalSecondsThreads;
+
+    @FXML
     void buttonPressed(ActionEvent event) {
-
-
-
-
-
-
-
         int numeroFactorial = Integer.parseInt(factorialUsuario.getText());
         int numeroTasks = Integer.parseInt(tasksUsuario.getText());
         System.out.println("Factorial: " + numeroFactorial + " Tasks: " + numeroTasks);
 
-
-
-
-
-
-
-
-        //Corriendo usando threads
+        calculandoThreads.setText("Calculando ...");
+        calculandoSerial.setText("Calculando ...");
         corriendoConTask(numeroFactorial, numeroTasks);
-
-        //Corriendo usando serial
         corriendoSerial(numeroFactorial);
 
 
 
 
-
-
-
-
-
     }
+
+
+
+
+
+
 
 
     int[] factorialNumeroTask(int factorial, int numTasks) {
@@ -116,12 +116,6 @@ public class mainPageController {
             });
             inicio = fin + 1;
         }
-
-
-
-
-
-
 
 
         System.out.println("Lista de tasks: " + listaTasks.size());
@@ -173,8 +167,16 @@ public class mainPageController {
         System.out.println();
         System.out.println("Total: " + total);
 
+        long tiempoTotal = 0;
+        for (int i = 0; i < listaTasks.size(); i++) {
+            tiempoTotal += listaTasks.get(i).tiempo;
+        }
+        System.out.println("Tiempo total: " + tiempoTotal);
+        totalSecondsThreads.setText("Tiempo Total: " + String.valueOf(tiempoTotal) + " milisegundos");
+
 
         tableViewUpdater(tablaResultadoTask, listaTasks);
+        totalThreads.setText("Total Calculado: " + String.valueOf(total));
 
 
     }
@@ -228,7 +230,8 @@ public class mainPageController {
         listaTasks.add(f);
 
         tableViewUpdater(tablaResultadoSerial, listaTasks);
-
+        totalSerial.setText("Total Calculado: " + String.valueOf(listaTasks.get(0).subTotal));
+        totalMilisecondsSerial.setText("Tiempo Total: " + String.valueOf(listaTasks.get(0).tiempo) + " milisegundos");
 
 
 
