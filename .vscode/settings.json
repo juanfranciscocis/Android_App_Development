@@ -1,0 +1,11 @@
+{
+    "java.project.sourcePaths": [
+        "Examples Threads/counterThread&tests",
+        "proyecto2/demo/src/main/java/com/example/juan"
+    ],
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "JavaFX/javafx-sdk-19.0.2.1/**/*.jar"
+    ]
+}
