@@ -60,8 +60,8 @@ public class mainPageController {
         @Override
         public void mostrarResultados() {
             System.out.println("Mostrando resultados");
-            calculandoThreads.setText("Mostando resultados ...");
-            calculandoSerial.setText("Mostando resultados ...");
+            calculandoThreads.setText("Mostrando resultados ...");
+            calculandoSerial.setText("Mostrando resultados ...");
             // Mostrar resultados
             try {
                 mostrarTotalTask();
@@ -69,7 +69,6 @@ public class mainPageController {
             }catch (Exception e){
                 System.out.println("...");
             }
-
 
 
         }
@@ -84,15 +83,14 @@ public class mainPageController {
         int numeroFactorial = Integer.parseInt(factorialUsuario.getText());
         int numeroTasks = Integer.parseInt(tasksUsuario.getText());
         System.out.println("Factorial: " + numeroFactorial + " Tasks: " + numeroTasks);
+        Thread t = new Thread(listener);
+        t.start();
+        System.out.println("Thread started");
 
         calculandoThreads.setText("Calculando ...");
         calculandoSerial.setText("Calculando ...");
 
         completado = new ArrayList<Boolean>();
-
-
-
-
 
         tableViewCreator(tablaResultadoTask);
         tablaResultadoTask.setItems(itemsThread);
@@ -100,15 +98,10 @@ public class mainPageController {
         tablaResultadoSerial.setItems(itemsSerial);
 
 
+
+
         calcThreads(numeroFactorial, numeroTasks);
         corriendoSerial(numeroFactorial);
-
-
-
-
-
-
-
 
 
 
@@ -148,7 +141,6 @@ public class mainPageController {
 
             f.setOnSucceeded(e-> {
                 completado.add(true);
-                listener.arrayChanged(completado);
             });
             listaTasks.add(f);
 
@@ -262,8 +254,6 @@ public class mainPageController {
         t.start();
 
         taskSerial = f;
-
-
 
     }
 
