@@ -10,7 +10,6 @@ import javafx.scene.control.cell.MapValueFactory;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class mainPageController {
@@ -49,10 +48,32 @@ public class mainPageController {
     private Label totalSecondsThreads;
 
     public ArrayList<Factorial> listaTasks = new ArrayList<Factorial>();
+    public Factorial taskSerial;
 
     public ObservableList<Map<String,String>> itemsThread = FXCollections.<Map<String,String>>observableArrayList();
 
     public ObservableList<Map<String,String>> itemsSerial = FXCollections.<Map<String,String>>observableArrayList();
+
+    public ArrayList<Boolean> completado;
+
+    BooleanArrayListener listener = new BooleanArrayListener(completado, new BooleanArrayListenerInterface() {
+        @Override
+        public void mostrarResultados() {
+            System.out.println("Mostrando resultados");
+            calculandoThreads.setText("Mostando resultados ...");
+            calculandoSerial.setText("Mostando resultados ...");
+            // Mostrar resultados
+            try {
+                mostrarTotalTask();
+                mostrarTotalSerial();
+            }catch (Exception e){
+                System.out.println("...");
+            }
+
+
+
+        }
+    });
 
 
 
@@ -67,6 +88,10 @@ public class mainPageController {
         calculandoThreads.setText("Calculando ...");
         calculandoSerial.setText("Calculando ...");
 
+        completado = new ArrayList<Boolean>();
+
+
+
 
 
         tableViewCreator(tablaResultadoTask);
@@ -75,14 +100,16 @@ public class mainPageController {
         tablaResultadoSerial.setItems(itemsSerial);
 
 
-
-
         calcThreads(numeroFactorial, numeroTasks);
         corriendoSerial(numeroFactorial);
 
-        Platform.runLater(()->{
-            mostrarTotales();
-        });
+
+
+
+
+
+
+
 
 
 
@@ -118,16 +145,23 @@ public class mainPageController {
                 itemsThread.add(f.item);
                 tablaResultadoTask.refresh();
             });
+
+            f.setOnSucceeded(e-> {
+                completado.add(true);
+                listener.arrayChanged(completado);
+            });
             listaTasks.add(f);
 
             listaThreads.add(new Thread(f));
             listaThreads.get(i).setDaemon(true);
             listaThreads.get(i).start();
 
+
         }
     }
 
-    void mostrarTotales() {
+    void mostrarTotalTask() {
+
         long totalTiempo = 0;
         BigInteger totalFactorial = BigInteger.valueOf(1);
         for (Factorial f : listaTasks) {
@@ -136,9 +170,27 @@ public class mainPageController {
         }
         totalSecondsThreads.setText("Total Milisegundos: " + totalTiempo);
         totalThreads.setText("Total Threads: " + totalFactorial);
-        listaTasks.removeAll(listaTasks);
+
+        Platform.runLater(()->{
+            listaTasks.clear();
+            calculandoThreads.setText("COMPLETADO");
+        });
 
     }
+
+    void mostrarTotalSerial(){
+        while (taskSerial.subTotal == null){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        totalMilisecondsSerial.setText("Total Milisegundos: " + taskSerial.tiempo);
+        totalSerial.setText("Total Serial: " + taskSerial.subTotal);
+        calculandoSerial.setText("COMPLETADO");
+    }
+
     int[] factorialNumeroTask(int factorial, int numTasks) {
         if (factorial < 0 || numTasks < 1) {
             throw new IllegalArgumentException("Invalid input values");
@@ -176,35 +228,6 @@ public class mainPageController {
 
     }
 
-
-    void tableViewUpdater (TableView tableView, ArrayList<Factorial> listaTasks){
-        TableColumn columna1 = new TableColumn("Task");
-        columna1.setCellValueFactory(new MapValueFactory<>("Task"));
-        TableColumn columna2 = new TableColumn("Factorial");
-        columna2.setCellValueFactory(new MapValueFactory<>("Factorial"));
-        TableColumn columna3 = new TableColumn("Tiempo Milisegundos");
-        columna3.setCellValueFactory(new MapValueFactory<>("Tiempo Milisegundos"));
-
-        tableView.getColumns().add(columna1);
-        tableView.getColumns().add(columna2);
-        tableView.getColumns().add(columna3);
-
-        ObservableList<Map<String, String>> items = FXCollections.<Map<String,String>>observableArrayList();
-
-        for (int i = 0; i < listaTasks.size(); i++) {
-            Map<String,String> item = new HashMap<>();
-            item.put("Task", String.valueOf(i));
-            item.put("Factorial", String.valueOf(listaTasks.get(i).subTotal));
-            item.put("Tiempo Milisegundos", String.valueOf(listaTasks.get(i).tiempo));
-            items.add(item);
-        }
-
-
-
-        tableView.setItems(items);
-    }
-
-
     void corriendoSerial(int numeroFactorial){
         Factorial f = new Factorial(BigInteger.valueOf(1), BigInteger.valueOf(numeroFactorial));
 
@@ -238,17 +261,7 @@ public class mainPageController {
         t.setDaemon(true);
         t.start();
 
-        /*
-        System.out.println("Serial: " + f.subTotal);
-        calculandoSerial.setText("Calculado");
-        ArrayList<Factorial> listaTasks = new ArrayList<Factorial>();
-        listaTasks.add(f);
-
-        tableViewUpdater(tablaResultadoSerial, listaTasks);
-        totalSerial.setText("Total Calculado: " + String.valueOf(listaTasks.get(0).subTotal));
-        totalMilisecondsSerial.setText("Tiempo Total: " + String.valueOf(listaTasks.get(0).tiempo) + " milisegundos");
-         */
-
+        taskSerial = f;
 
 
 
