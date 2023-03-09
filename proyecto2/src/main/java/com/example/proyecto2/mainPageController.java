@@ -139,6 +139,8 @@ public class mainPageController {
                 tablaResultadoTask.refresh();
             });
 
+
+
             f.setOnSucceeded(e-> {
                 completado.add(true);
             });
