@@ -13,7 +13,7 @@ public class Faculty {
 
 
     //PROPERTIES
-    final String DATABASE_URL = "jdbc:derby:register";
+    final String DATABASE_URL = "jdbc:derby:Registros;create=false";
     final String FACULTY_TABLE_QUERY =
             "SELECT facultyID, facultyName, office FROM faculty";
 
@@ -23,7 +23,11 @@ public class Faculty {
 
 
     //CONSTRUCTOR
-    public Faculty() {
+    public Faculty() throws SQLException {
+        Connection connection = DriverManager.getConnection(DATABASE_URL);
+        Statement statement = connection.createStatement();
+        statement.execute("INSERT INTO faculty (facultyID, facultyName, office) VALUES (1, 'Juan', 'A-101')");
+        statement.execute("INSERT INTO faculty (facultyID, facultyName, office) VALUES (2, 'Pedro', 'A-102')");
     }
 
     //METHODS
@@ -34,6 +38,24 @@ public class Faculty {
                         DATABASE_URL);
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(FACULTY_TABLE_QUERY)) {
+
+            System.out.println("Faculty Table");
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int numberOfColumns = metaData.getColumnCount();
+            for (int i = 1; i <= numberOfColumns; i++) {
+                System.out.printf("%-8s\t", metaData.getColumnName(i));
+            }
+            System.out.println();
+
+            while (resultSet.next()) {
+                for (int i = 1; i <= numberOfColumns; i++) {
+                    System.out.printf("%-8s\t", resultSet.getObject(i));
+                }
+                System.out.println();
+            }
+
+
+
 
             return resultSet;
         } catch (SQLException sqlException) {

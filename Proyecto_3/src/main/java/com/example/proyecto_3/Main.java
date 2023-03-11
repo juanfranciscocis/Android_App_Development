@@ -9,15 +9,19 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
-        String driver = "org.apache.derby.jdbc.EmbeddedDriver";
-        Class.forName(driver).newInstance();
-        String protocol = "jdbc:derby:";
-        Connection conn = DriverManager.getConnection(protocol + "MyDbTest;create=false");
+        Connection connection = DriverManager.getConnection("jdbc:derby:Registros;create=true");
+        Statement statement = connection.createStatement();
+        statement.execute("DROP TABLE faculty");
+        statement.execute("DROP TABLE courses");
+        statement.execute("CREATE TABLE faculty (facultyID INT, facultyName VARCHAR(50), office VARCHAR(50))");
+        statement.execute("CREATE TABLE courses (courseID INT, courseName VARCHAR(50), facultyID INT)");
+
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("facultyGUI.fxml"));
         fxmlLoader.setController(new FacultyController());
         Scene scene = new Scene(fxmlLoader.load());

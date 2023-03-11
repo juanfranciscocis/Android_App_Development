@@ -38,6 +38,9 @@ public class FacultyController {
 
     Faculty faculty = new Faculty();
 
+    public FacultyController() throws SQLException {
+    }
+
 
     void facultyList() throws SQLException {
         ResultSet resultSet = faculty.getFacultyTable();
@@ -61,7 +64,7 @@ public class FacultyController {
         }
     }
 
-    //@FXML
+    @FXML
     void  initialize() {
         try {
             facultyList();
