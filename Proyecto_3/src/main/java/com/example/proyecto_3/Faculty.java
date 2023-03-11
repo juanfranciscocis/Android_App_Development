@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Faculty {
+
+
     //PROPERTIES
     final String DATABASE_URL = "jdbc:derby:register";
     final String FACULTY_TABLE_QUERY =
