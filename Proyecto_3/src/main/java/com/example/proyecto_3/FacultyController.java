@@ -121,7 +121,7 @@ public class FacultyController {
     void eliminarFaculty(ActionEvent event) {
 
         if(!this.coursesOpened){
-            new AlertaErrorGUI("No se puede eliminar un faculty hasta que no se abra la ventana de cursos");
+            new AlertaErrorGUI("No se puede eliminar un faculty hasta que no se abra la ventana de cursos (POR SU SEGURIDAD)");
             return;
         }
 
@@ -133,7 +133,7 @@ public class FacultyController {
         ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
         ButtonType type2 = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         //Poniendo texto de confirmacion
-        alert.setContentText("Quiere eliminar el registro?");
+        alert.setContentText("Quiere eliminar el registro? Si lo hace, se eliminaran todos los cursos asociados a este faculty");
         //Agregando boton al GUI
         //Mostrando Alerta
         alert.showAndWait();
@@ -173,19 +173,21 @@ public class FacultyController {
     void bucar(ActionEvent event) throws IOException {
 
         if (!this.coursesOpened) {
-            System.out.println("No se puede buscar cursos si no se ha abierto la ventana de cursos");
+            System.out.println("Primero abra la ventana de cursos para que pueda buscar registros validos");
 
             //Alerta de error
             Alert alert = new Alert(Alert.AlertType.ERROR);
             //Poniendo nombre Alerta
             alert.setTitle("Error");
             //Poniendo texto de confirmacion
-            alert.setContentText("No se puede buscar cursos si no se ha abierto la ventana de cursos");
+            alert.setContentText("Primero abra la ventana de cursos para que pueda buscar registros validos");
             //Agregando boton al GUI
             //Mostrando Alerta
             alert.showAndWait();
             return;
         }
+
+
 
 
 
