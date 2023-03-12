@@ -11,8 +11,8 @@
    <children>
       <TableView fx:id="faculty_tableview" layoutX="39.0" layoutY="22.0" prefHeight="200.0" prefWidth="482.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn prefWidth="75.0" text="C1" visible="false" />
+          <TableColumn prefWidth="75.0" text="C2" visible="false" />
         </columns>
       </TableView>
       <Label layoutX="39.0" layoutY="232.0" text="AGREGAR DATOS" />
@@ -24,7 +24,7 @@
       <Label layoutX="198.0" layoutY="249.0" text="FACULTY NAME" />
       <Label layoutX="357.0" layoutY="249.0" text="OFFICE" />
       <Button layoutX="291.0" layoutY="300.0" mnemonicParsing="false" onAction="#editarFaculty" text="EDITAR" />
-      <TextField fx:id="faculty_id1" layoutX="39.0" layoutY="350.0" />
+      <TextField fx:id="faculty_id_delete" layoutX="39.0" layoutY="350.0" />
       <Button layoutX="211.0" layoutY="350.0" mnemonicParsing="false" onAction="#eliminarFaculty" text="ELIMINAR" />
       <Label layoutX="39.0" layoutY="333.0" text="FACULTY ID" />
       <Button layoutX="399.0" layoutY="350.0" mnemonicParsing="false" onAction="#openCourse" text="OPEN COURSE GUI" />

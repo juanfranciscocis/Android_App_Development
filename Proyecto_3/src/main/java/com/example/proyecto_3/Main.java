@@ -15,13 +15,21 @@ import java.sql.Statement;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:derby:Registros;create=true");
-        Statement statement = connection.createStatement();
-        statement.execute("DROP TABLE faculty");
-        statement.execute("DROP TABLE courses");
-        statement.execute("CREATE TABLE faculty (facultyID INT, facultyName VARCHAR(50), office VARCHAR(50))");
-        statement.execute("CREATE TABLE courses (courseID INT, courseName VARCHAR(50), facultyID INT)");
+        try (Connection connection = DriverManager.getConnection("jdbc:derby:Registros;create=true")){
+            Statement statement = connection.createStatement();
+            statement.execute("DROP TABLE courses");
+            statement.execute("DROP TABLE faculty");
+            System.out.println("Tables dropped (MAIN)");
+        }
 
+        try (Connection connection = DriverManager.getConnection("jdbc:derby:Registros;create=true")){
+            Statement statement = connection.createStatement();
+
+            statement.execute("CREATE TABLE faculty (facultyID VARCHAR(6) NOT NULL , facultyName VARCHAR(50) NOT NULL , office VARCHAR(50) NOT NULL , PRIMARY KEY (facultyID))");
+            statement.execute("CREATE TABLE courses (courseID VARCHAR(50) NOT NULL , courseName VARCHAR(50) NOT NULL , facultyID VARCHAR(6) NOT NULL , PRIMARY KEY (courseID), FOREIGN KEY (facultyID) REFERENCES faculty(facultyID))");
+            System.out.println("Tables created (MAIN)");
+
+        }
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("facultyGUI.fxml"));
         fxmlLoader.setController(new FacultyController());
         Scene scene = new Scene(fxmlLoader.load());

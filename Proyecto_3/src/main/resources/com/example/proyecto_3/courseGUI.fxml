@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TableView fx:id="course_tableview" layoutX="39.0" layoutY="22.0" prefHeight="200.0" prefWidth="482.0">
         <columns>
@@ -15,7 +15,6 @@
           <TableColumn prefWidth="75.0" text="C2" />
         </columns>
       </TableView>
-      <Label layoutX="39.0" layoutY="232.0" text="AGREGAR DATOS" />
       <TextField fx:id="course_id" layoutX="39.0" layoutY="266.0" />
       <TextField fx:id="course_name" layoutX="198.0" layoutY="266.0" />
       <TextField fx:id="faculty_course_id" layoutX="357.0" layoutY="266.0" />
@@ -23,11 +22,13 @@
       <Label layoutX="39.0" layoutY="249.0" text="COURSE ID" />
       <Label layoutX="198.0" layoutY="249.0" text="COURSE NAME" />
       <Label layoutX="357.0" layoutY="249.0" text="FACULTY ID" />
-      <Button layoutX="291.0" layoutY="300.0" mnemonicParsing="false" onAction="#editarCurso" text="EDITAR" />
-      <TextField fx:id="faculty_course_id1" layoutX="39.0" layoutY="350.0" />
-      <Button layoutX="211.0" layoutY="350.0" mnemonicParsing="false" onAction="#eliminarCurso" text="ELIMINAR" />
-      <Label layoutX="39.0" layoutY="333.0" text="COURSE ID" />
-      <Button layoutX="299.0" layoutY="398.0" mnemonicParsing="false" onAction="#palabrasComunesCursos" text="CURSOS CON PALABRAS COMUNES" />
-      <TextField fx:id="cursosComunes" layoutX="118.0" layoutY="398.0" />
+      <Button layoutX="291.0" layoutY="300.0" mnemonicParsing="false" onAction="#editarCurso" text="EDITAR POR COURSE ID" />
+      <TextField fx:id="faculty_course_delete" layoutX="81.0" layoutY="382.0" />
+      <Button layoutX="243.0" layoutY="382.0" mnemonicParsing="false" onAction="#eliminarCurso" text="ELIMINAR" />
+      <Label layoutX="128.0" layoutY="365.0" text="COURSE ID" />
+      <Button layoutX="246.0" layoutY="441.0" mnemonicParsing="false" onAction="#palabrasComunesCursos" text="CURSOS CON PALABRAS COMUNES" />
+      <TextField fx:id="cursosComunes" layoutX="81.0" layoutY="441.0" />
+      <Button layoutX="206.0" layoutY="484.0" mnemonicParsing="false" onAction="#recargarDatos" text="RECARGAR DATOS" />
+      <Label layoutX="87.0" layoutY="424.0" text="INGRESAR UNA PALABRA PARA BUSCAR: " />
    </children>
 </Pane>

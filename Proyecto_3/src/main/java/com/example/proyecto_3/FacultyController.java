@@ -1,5 +1,6 @@
 package com.example.proyecto_3;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,10 +11,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class FacultyController {
 
@@ -25,7 +24,7 @@ public class FacultyController {
     private TextField faculty_id;
 
     @FXML
-    private TextField faculty_id1;
+    private TextField faculty_id_delete;
 
     @FXML
     private TextField faculty_name;
@@ -34,39 +33,51 @@ public class FacultyController {
     private TextField faculty_office;
 
     @FXML
-    private TableView<String> faculty_tableview;
+    private TableView<Faculty> faculty_tableview;
 
-    Faculty faculty = new Faculty();
+    FacultyDB facultyDB = new FacultyDB();
 
     public FacultyController() throws SQLException {
     }
 
 
     void facultyList() throws SQLException {
-        ResultSet resultSet = faculty.getFacultyTable();
-        ResultSetMetaData metaData = resultSet.getMetaData();
-        int numberOfColumns = metaData.getColumnCount();
 
-        for (int i = 1; i <= numberOfColumns; i++) {
-            TableColumn column = new TableColumn(metaData.getColumnName(i));
-            column.setCellValueFactory(new PropertyValueFactory<>(metaData.getColumnName(i)));
-            faculty_tableview.getColumns().add(column);
+        try {
+            faculty_tableview.getColumns().clear();
+            faculty_tableview.getItems().clear();
+
+        }catch (Exception e) {
+            System.out.println("No se pudo limpiar la tabla");
+
+
+        }
+
+
+        try {
+            TableColumn<Faculty, String> facultyID = new TableColumn<>("ID");
+            facultyID.setCellValueFactory(new PropertyValueFactory<>("id"));
+            TableColumn<Faculty, String> facultyName = new TableColumn<>("Name");
+            facultyName.setCellValueFactory(new PropertyValueFactory<>("name"));
+            TableColumn<Faculty, String> facultyOffice = new TableColumn<>("Office");
+            facultyOffice.setCellValueFactory(new PropertyValueFactory<>("office"));
+            faculty_tableview.getColumns().addAll(facultyID, facultyName, facultyOffice);
+            faculty_tableview.setItems(facultyDB.getFacultyTable());
+
+        }catch (Exception e) {
+            System.out.println("No se pudo llenar la tabla");
         }
 
 
 
-        while (resultSet.next()) {
-            ArrayList<String> row = new ArrayList<>();
-            for (int i = 1; i <= numberOfColumns; i++) {
-                row.add((String) resultSet.getObject(i));
-            }
-            faculty_tableview.getItems().add(String.valueOf(row));
-        }
+
+
     }
 
     @FXML
     void  initialize() {
         try {
+            System.out.println("FacultyController initialize");
             facultyList();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -75,23 +86,25 @@ public class FacultyController {
 
     @FXML
     void agregarFaculty(ActionEvent event) {
-        ResultSet resultSet = faculty.addFaculty(faculty_id.getText(), faculty_name.getText(), faculty_office.getText());
+        facultyDB.addFaculty(faculty_id.getText(), faculty_name.getText(), faculty_office.getText());
         //Delete all rows and columns
         faculty_tableview.getColumns().clear();
         faculty_tableview.getItems().clear();
+
+        System.out.println("Agregado");
         try {
             facultyList();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
     }
 
     @FXML
     void editarFaculty(ActionEvent event) {
-        ResultSet resultSet = faculty.editFaculty(faculty_id.getText(), faculty_name.getText(), faculty_office.getText());
-        //Delete all rows and columns
-        faculty_tableview.getColumns().clear();
-        faculty_tableview.getItems().clear();
+
+        facultyDB.editFaculty(faculty_id.getText(), faculty_name.getText(), faculty_office.getText());
+        System.out.println("Editado");
         try {
             facultyList();
         } catch (SQLException throwables) {
@@ -121,7 +134,7 @@ public class FacultyController {
         }
 
 
-        ResultSet resultSet = faculty.deleteFaculty(faculty_id.getText());
+        facultyDB.deleteFaculty(faculty_id_delete.getText());
         //Delete all rows and columns
         faculty_tableview.getColumns().clear();
         faculty_tableview.getItems().clear();
@@ -146,11 +159,13 @@ public class FacultyController {
 
     @FXML
     void bucar(ActionEvent event) throws IOException {
-        ResultSet resultSet = faculty.cursosPorFaculty(cursosPorFacultyName.getText());
+
+        ObservableList<Course> courseList = facultyDB.cursosPorFaculty(cursosPorFacultyName.getText());
+
 
         Stage stage = new Stage();
         FXMLLoader fxmlCoincheckerMenu = new FXMLLoader(Main.class.getResource("cursosXFacultyGUI.fxml"));
-        fxmlCoincheckerMenu.setController(new CursosXFacultyController(resultSet));
+        fxmlCoincheckerMenu.setController(new CursosXFacultyController(courseList));
         Scene scene = new Scene(fxmlCoincheckerMenu.load());
         stage.setTitle("Cursos X Faculty GUI");
         stage.setScene(scene);
