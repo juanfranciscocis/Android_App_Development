@@ -32,6 +32,8 @@ public class FacultyDB {
                     "    ('H99118', 'Ying Bai', 'MTC-336'),\n" +
                     "    ('J33486', 'Steve Johnson', 'MTC-118'),\n" +
                     "    ('K69880', 'Jenney King', 'MTC-324')");
+        }catch (SQLException e){
+            System.out.println();
         }
     }
 
@@ -64,6 +66,12 @@ public class FacultyDB {
     }
 
     public void addFaculty(String facultyID, String facultyName, String office) {
+
+        if (facultyID.isEmpty() || facultyName.isEmpty() || office.isEmpty()) {
+            new AlertaErrorGUI("Error al agregar el registro, Datos Vacios");
+            return;
+        }
+
         try (
                 Connection connection = DriverManager.getConnection(
                         DATABASE_URL);
@@ -71,12 +79,18 @@ public class FacultyDB {
             statement.execute("INSERT INTO faculty (facultyID, facultyName, office) VALUES ('" + facultyID + "', '" + facultyName + "', '" + office + "')");
             printInConsoleDB();
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            new AlertaErrorGUI("Error al agregar el registro, Verifique Datos");
 
         }
     }
 
     public void editFaculty(String facultyID, String facultyName, String office) {
+
+        if (facultyID.isEmpty() || facultyName.isEmpty() || office.isEmpty()) {
+            new AlertaErrorGUI("Error al editar el registro, Datos Vacios");
+            return;
+        }
+
         String sql = "UPDATE faculty SET facultyName = ?, office = ? WHERE facultyID = ?";
         try (Connection connection = DriverManager.getConnection(DATABASE_URL);
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -84,14 +98,21 @@ public class FacultyDB {
             statement.setString(2, office);
             statement.setString(3, facultyID);
             statement.executeUpdate();
+            if (statement.executeUpdate() == 0)
+                new AlertaErrorGUI("Error al editar el registro, Verifique Datos");
             printInConsoleDB();
         } catch (SQLException e) {
-            e.printStackTrace();
+            new AlertaErrorGUI("Error al editar el registro, Verifique Datos");
         }
     }
 
 
     public void deleteFaculty(String facultyID) {
+
+        if (facultyID.isEmpty()) {
+            new AlertaErrorGUI("Error al eliminar el registro, Datos Vacios");
+            return;
+        }
 
         //TODO: BORRAR TODOS LOS CURSOS QUE TENGA EL FACULTY
         String sql2 = "DELETE FROM courses WHERE facultyID = ?";
@@ -112,44 +133,54 @@ public class FacultyDB {
             statement.executeUpdate();
             printInConsoleDB();
         } catch (SQLException e) {
-            e.printStackTrace();
+            new AlertaErrorGUI("Error al eliminar el registro, Verifique Datos");
         }
 
 
     }
 
-    public ObservableList<Course> cursosPorFaculty(String facultyName) {
-        String facultyIDQuery = "SELECT facultyID FROM faculty WHERE facultyName = ?";
-        String cursosPorFacultyQuery = "SELECT course FROM course WHERE facultyID = ?";
-
-        ObservableList<Course> courses = FXCollections.observableArrayList();
-
-        try (
-                Connection connection = DriverManager.getConnection(DATABASE_URL);
-                PreparedStatement facultyIDStatement = connection.prepareStatement(facultyIDQuery);
-                PreparedStatement cursosPorFacultyStatement = connection.prepareStatement(cursosPorFacultyQuery);
-        ) {
-            // Get faculty ID for given faculty name
-            facultyIDStatement.setString(1, facultyName);
-            ResultSet resultSet1 = facultyIDStatement.executeQuery();
-            String facultyID = resultSet1.getString("facultyID");
-
-            // Get courses for the faculty with the given ID
-            cursosPorFacultyStatement.setString(1, facultyID);
-            ResultSet resultSet2 = cursosPorFacultyStatement.executeQuery();
-
-            // Process the results and add them to the list of courses
-            while (resultSet2.next()) {
-                String courseName = resultSet2.getString("course");
-                String id = resultSet2.getString("courseID");
-                courses.add(new Course(id,courseName, facultyID));
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+    public ObservableList<Course> getCoursesByFaculty(String facultyName) {
+        if (facultyName.isEmpty()) {
+            new AlertaErrorGUI("Error al buscar los cursos, Datos Vacios");
+            return null;
         }
+        ObservableList<Course> courses = FXCollections.observableArrayList();
+        String facultyID = "";
+        String sql = "SELECT facultyID FROM faculty WHERE facultyName = ?";
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, facultyName);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                facultyID = resultSet.getString("facultyID");
+                System.out.println(facultyID);
+            }
+        } catch (SQLException e) {
+            new AlertaErrorGUI("Error al buscar los cursos, Verifique Datos");
+        }
+
+        sql = "SELECT * FROM courses WHERE facultyID = ?";
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, facultyID);
+            ResultSet resultSet = statement.executeQuery();
+
+
+            while (resultSet.next()) {
+                Course course = new Course(resultSet.getString("courseID"), resultSet.getString("courseName"),
+                        resultSet.getString("facultyID"));
+                courses.add(course);
+            }
+        } catch (SQLException e) {
+            new AlertaErrorGUI("Error al buscar los cursos, Verifique Datos");
+        }
+
+
+
 
         return courses;
     }
+
 
 
 
@@ -183,7 +214,7 @@ public class FacultyDB {
 
 
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            new AlertaErrorGUI("Error al imprimir la base de datos, en el terminal");
 
         }
     }

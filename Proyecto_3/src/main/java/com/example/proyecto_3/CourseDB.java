@@ -31,7 +31,7 @@ public class CourseDB {
                     "    ('J33486', 'Intro to Programming', 'CSC-234'),\n" +
                     "    ('A52990', 'Programming 1', 'CSC-2345D')");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println();
         }
 
 
@@ -60,13 +60,19 @@ public class CourseDB {
 
 
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            new AlertaErrorGUI("Error al cargar la tabla de cursos");
 
         }
         return null;
     }
 
     public void addCourse(String courseID, String courseName, String facultyID) {
+
+        if (courseID.isEmpty() || courseName.isEmpty() || facultyID.isEmpty()) {
+            new AlertaErrorGUI("No se puede dejar campos vacios");
+            return;
+        }
+
         try (
                 Connection connection = DriverManager.getConnection(
                         DATABASE_URL);
@@ -74,61 +80,80 @@ public class CourseDB {
             statement.execute("INSERT INTO courses (courseID, courseName, facultyID) VALUES ('" + courseID + "', '" + courseName + "', '" + facultyID + "')");
             printInConsoleDB();
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            new AlertaErrorGUI("Error al agregar el curso, Verificar Datos");
 
         }
     }
 
     public void editCourse(String courseID, String courseName, String facultyID) {
-        String sql = "UPDATE courses SET courseID = ?, courseName = ? WHERE facultyID = ?";
+
+        if (courseID.isEmpty() || courseName.isEmpty() || facultyID.isEmpty()) {
+            new AlertaErrorGUI("No se puede dejar campos vacios");
+            return;
+        }
+
+        String sql = "UPDATE courses SET facultyID = ?, courseName = ? WHERE courseID = ?";
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, facultyID);
+            statement.setString(2, courseName);
+            statement.setString(3, courseID);
+            statement.executeUpdate();
+            if (statement.executeUpdate() == 0)
+                new AlertaErrorGUI("No se encontro el curso");
+            printInConsoleDB();
+        } catch (SQLException e) {
+            new AlertaErrorGUI("Error al editar el curso, Verificar Datos");
+        }
+    }
+
+
+    public void deleteCourse(String courseID) {
+
+        if (courseID.isEmpty()) {
+            new AlertaErrorGUI("No se puede dejar campos vacios");
+            return;
+        }
+
+        String sql = "DELETE FROM courses WHERE courseID = ?";
         try (Connection connection = DriverManager.getConnection(DATABASE_URL);
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, courseID);
-            statement.setString(2, courseName);
-            statement.setString(3, facultyID);
             statement.executeUpdate();
             printInConsoleDB();
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public ResultSet deleteCourse(String courseID) {
-        try (
-                Connection connection = DriverManager.getConnection(
-                        DATABASE_URL);
-                Statement statement = connection.createStatement();) {
-
-
-            String DELETE_COURSE = "DELETE FROM course WHERE courseID = " + courseID;
-            ResultSet resultSet = statement.executeQuery(DELETE_COURSE);
-            return resultSet;
-
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-
+            new AlertaErrorGUI("Error al eliminar el curso, Verificar Datos");
         }
 
-        return null;
+
     }
 
 
-    public ResultSet palabarasComunes(String palabra){
-        try (
-                Connection connection = DriverManager.getConnection(
-                        DATABASE_URL);
-                Statement statement = connection.createStatement();) {
 
-            String PALABRAS_COMUNES = "SELECT * FROM course WHERE course LIKE '%" + palabra + "%'";
-            ResultSet resultSet = statement.executeQuery(PALABRAS_COMUNES);
-            return resultSet;
+    public ObservableList<Course> palabrasComunes(String palabra) {
 
-        }catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-
+        if (palabra.isEmpty()) {
+            new AlertaErrorGUI("No se puede dejar campos vacios");
+            return null;
         }
-        return null;
+
+        ObservableList<Course> courses = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM courses WHERE courseName LIKE ?";
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, "%" + palabra + "%");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Course course = new Course(resultSet.getString("courseID"), resultSet.getString("courseName"),
+                        resultSet.getString("facultyID"));
+                courses.add(course);
+            }
+        } catch (SQLException e) {
+            new AlertaErrorGUI("Error al buscar el curso, Verificar Datos");
+        }
+        return courses;
     }
+
 
 
     private void printInConsoleDB() {
@@ -158,7 +183,7 @@ public class CourseDB {
 
 
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            System.out.println("Error al cargar la tabla de cursos");
 
         }
     }

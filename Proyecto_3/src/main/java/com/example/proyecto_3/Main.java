@@ -15,12 +15,19 @@ import java.sql.Statement;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+
+
+        /*
+        // EN CASO DE QUE LA BASE DE DATOS LA QUERRAMOS BORRAR
         try (Connection connection = DriverManager.getConnection("jdbc:derby:Registros;create=true")){
             Statement statement = connection.createStatement();
             statement.execute("DROP TABLE courses");
             statement.execute("DROP TABLE faculty");
             System.out.println("Tables dropped (MAIN)");
         }
+
+         */
+
 
         try (Connection connection = DriverManager.getConnection("jdbc:derby:Registros;create=true")){
             Statement statement = connection.createStatement();
@@ -29,6 +36,8 @@ public class Main extends Application {
             statement.execute("CREATE TABLE courses (courseID VARCHAR(50) NOT NULL , courseName VARCHAR(50) NOT NULL , facultyID VARCHAR(6) NOT NULL , PRIMARY KEY (courseID), FOREIGN KEY (facultyID) REFERENCES faculty(facultyID))");
             System.out.println("Tables created (MAIN)");
 
+        }catch (Exception e) {
+            System.out.println("Tables already exist (MAIN)");
         }
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("facultyGUI.fxml"));
         fxmlLoader.setController(new FacultyController());

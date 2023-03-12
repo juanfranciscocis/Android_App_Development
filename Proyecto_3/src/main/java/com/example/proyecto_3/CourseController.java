@@ -1,12 +1,11 @@
 package com.example.proyecto_3;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -15,6 +14,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CourseController {
+
+
+    @FXML
+    private TextField course_delete;
 
     @FXML
     private TextField course_id;
@@ -32,8 +35,7 @@ public class CourseController {
     @FXML
     private TextField faculty_course_id;
 
-    @FXML
-    private TextField faculty_course_id1;
+
 
     public CourseDB courseDB = new CourseDB();
 
@@ -113,15 +115,44 @@ public class CourseController {
     @FXML
     void eliminarCurso(ActionEvent event) {
 
+        // POP UP CONFIRMATION
+        //Alerta de Confirmacion
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        //Poniendo nombre Alerta
+        alert.setTitle("Alerta");
+        ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
+        ButtonType type2 = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        //Poniendo texto de confirmacion
+        alert.setContentText("Quiere eliminar el registro?");
+        //Agregando boton al GUI
+        //Mostrando Alerta
+        alert.showAndWait();
+
+        //Si el usuario presiona el boton de cancelar, no se elimina el registro
+        if (alert.getResult()==ButtonType.CANCEL) {
+            return;
+        }
+
+
+        courseDB.deleteCourse(course_delete.getText());
+        //Delete all rows and columns
+        course_tableview.getColumns().clear();
+        course_tableview.getItems().clear();
+        try {
+            courseList();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
     @FXML
     void palabrasComunesCursos(ActionEvent event) throws IOException {
-        ResultSet resultSet = courseDB.palabarasComunes(cursosComunes.getText());
+        ObservableList<Course> courses = courseDB.palabrasComunes(cursosComunes.getText());
 
         Stage stage = new Stage();
         FXMLLoader fxmlCoincheckerMenu = new FXMLLoader(Main.class.getResource("cursosXFacultyGUI.fxml"));
-        //fxmlCoincheckerMenu.setController(new CursosXFacultyController(resultSet));
+        fxmlCoincheckerMenu.setController(new CursosXFacultyController(courses));
         Scene scene = new Scene(fxmlCoincheckerMenu.load());
         stage.setTitle("Cursos Comunes");
         stage.setScene(scene);

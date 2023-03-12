@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 public class FacultyController {
 
+    private boolean coursesOpened = false;
+
 
     @FXML
     private TextField cursosPorFacultyName;
@@ -49,6 +51,7 @@ public class FacultyController {
 
         }catch (Exception e) {
             System.out.println("No se pudo limpiar la tabla");
+            new AlertaErrorGUI("No se pudo limpiar la tabla");
 
 
         }
@@ -66,6 +69,7 @@ public class FacultyController {
 
         }catch (Exception e) {
             System.out.println("No se pudo llenar la tabla");
+            new AlertaErrorGUI("No se pudo llenar la tabla");
         }
 
 
@@ -80,7 +84,7 @@ public class FacultyController {
             System.out.println("FacultyController initialize");
             facultyList();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            new AlertaErrorGUI("No se pudo llenar la tabla");
         }
     }
 
@@ -95,7 +99,7 @@ public class FacultyController {
         try {
             facultyList();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            new AlertaErrorGUI("No se pudo llenar la tabla");
         }
 
     }
@@ -108,13 +112,19 @@ public class FacultyController {
         try {
             facultyList();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            new AlertaErrorGUI("No se pudo llenar la tabla");
         }
 
     }
 
     @FXML
     void eliminarFaculty(ActionEvent event) {
+
+        if(!this.coursesOpened){
+            new AlertaErrorGUI("No se puede eliminar un faculty hasta que no se abra la ventana de cursos");
+            return;
+        }
+
         // POP UP CONFIRMATION
         //Alerta de Confirmacion
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -141,12 +151,14 @@ public class FacultyController {
         try {
             facultyList();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            new AlertaErrorGUI("No se pudo llenar la tabla");
         }
     }
 
     @FXML
     void openCourse(ActionEvent event) throws IOException {
+
+        this.coursesOpened = true;
 
         Stage stage = new Stage();
         FXMLLoader fxmlCoincheckerMenu = new FXMLLoader(Main.class.getResource("courseGUI.fxml"));
@@ -160,7 +172,25 @@ public class FacultyController {
     @FXML
     void bucar(ActionEvent event) throws IOException {
 
-        ObservableList<Course> courseList = facultyDB.cursosPorFaculty(cursosPorFacultyName.getText());
+        if (!this.coursesOpened) {
+            System.out.println("No se puede buscar cursos si no se ha abierto la ventana de cursos");
+
+            //Alerta de error
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            //Poniendo nombre Alerta
+            alert.setTitle("Error");
+            //Poniendo texto de confirmacion
+            alert.setContentText("No se puede buscar cursos si no se ha abierto la ventana de cursos");
+            //Agregando boton al GUI
+            //Mostrando Alerta
+            alert.showAndWait();
+            return;
+        }
+
+
+
+
+        ObservableList<Course> courseList = facultyDB.getCoursesByFaculty(cursosPorFacultyName.getText());
 
 
         Stage stage = new Stage();

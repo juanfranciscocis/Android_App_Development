@@ -23,7 +23,7 @@
       <Label layoutX="39.0" layoutY="249.0" text="FACULTY ID" />
       <Label layoutX="198.0" layoutY="249.0" text="FACULTY NAME" />
       <Label layoutX="357.0" layoutY="249.0" text="OFFICE" />
-      <Button layoutX="291.0" layoutY="300.0" mnemonicParsing="false" onAction="#editarFaculty" text="EDITAR" />
+      <Button layoutX="291.0" layoutY="300.0" mnemonicParsing="false" onAction="#editarFaculty" text="EDITAR POR FACULTY ID" />
       <TextField fx:id="faculty_id_delete" layoutX="39.0" layoutY="350.0" />
       <Button layoutX="211.0" layoutY="350.0" mnemonicParsing="false" onAction="#eliminarFaculty" text="ELIMINAR" />
       <Label layoutX="39.0" layoutY="333.0" text="FACULTY ID" />
