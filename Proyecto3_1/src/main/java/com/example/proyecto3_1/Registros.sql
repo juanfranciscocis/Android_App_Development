@@ -1,22 +1,22 @@
 DROP TABLE faculty;
-DROP TABLE course;
+DROP TABLE courses;
 
 CREATE TABLE faculty(
-    faculty_id VARCHAR(6) NOT NULL,
-    faculty_name VARCHAR(50) NOT NULL,
+    facultyID VARCHAR(6) NOT NULL,
+    facultyName VARCHAR(50) NOT NULL,
     office VARCHAR(50) NOT NULL,
-    PRIMARY KEY (faculty_id)
+    PRIMARY KEY (facultyID)
 );
 
-CREATE TABLE course(
-    course_id VARCHAR(50) NOT NULL,
-    course VARCHAR(50) NOT NULL,
-    faculty_id VARCHAR(6) NOT NULL,
-    PRIMARY KEY (course_id),
-    FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id)
+CREATE TABLE courses(
+    courseID VARCHAR(50) NOT NULL,
+    courseName VARCHAR(50) NOT NULL,
+    facultyID VARCHAR(6) NOT NULL,
+    PRIMARY KEY (courseID),
+    FOREIGN KEY (facultyID) REFERENCES faculty(facultyID)
 );
 
-INSERT INTO faculty (faculty_id, faculty_name, office)
+INSERT INTO faculty (facultyID, facultyName, office)
 VALUES
     ('A52990', 'John Smith', 'MTC-218'),
     ('A77587', 'Sally Smith', 'MTC-320'),
@@ -27,7 +27,7 @@ VALUES
     ('J33486', 'Steve Johnson', 'MTC-118'),
     ('K69880', 'Jenney King', 'MTC-324');
 
-INSERT INTO course (faculty_id, course, course_id)
+INSERT INTO courses (facultyID, courseName, courseID)
 VALUES
     ('A52990', 'Data Structures', 'CSC-132A'),
     ('A77587', 'Programming 2', 'CSC-12'),
