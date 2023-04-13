@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                texto.setText("Hola Juan");
+                texto.setText("Hola");
             }
         });
 
