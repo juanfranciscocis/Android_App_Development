@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/fpasmay/smb/miscursos/Android/activity-lifecycle1/app/libs/android-support-v13.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ecda966839090a41b29a9239d44bafc06fdadb87">
+        <dex dex="/Users/fpasmay/smb/miscursos/Android/activity-lifecycle1/app/build/intermediates/pre-dexed/debug/android-support-v13_3935857579e64cd690d5f90af7feca1bb6808acc.jar" />
+    </item>
+
+</items>

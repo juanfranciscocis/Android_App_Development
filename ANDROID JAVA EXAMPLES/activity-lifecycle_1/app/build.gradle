@@ -1,0 +1,23 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 32
+    //buildToolsVersion "28.0.3"
+    defaultConfig {
+        applicationId "com.example.android.lifecycle"
+        minSdkVersion 26
+        targetSdkVersion 26
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    buildToolsVersion '28.0.3'
+}
+
+dependencies {
+    implementation files('libs/android-support-v13.jar')
+    //api "com.android.support:support-v13:28.0.0"
+}
