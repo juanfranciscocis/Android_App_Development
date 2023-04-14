@@ -1,6 +1,7 @@
 package com.example.proyecto4;
 
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 
@@ -51,35 +52,41 @@ public class Data {
     }
 
     // Search a gastoUsuario with the gasto
-    public GastoNuevo searchGastoUsuario(String gasto){
-        for (GastoNuevo gastoUsuario : gastosUsuario) {
-            if (gastoUsuario.getGasto().equals(gasto)) {
-                return gastoUsuario;
+    public ArrayList<GastoNuevo> searchGastoUsuario(String gasto){
+        ArrayList<GastoNuevo> gastos = new ArrayList<GastoNuevo>();
+        for (GastoNuevo gastoUsuario : this.gastosUsuario) {
+            Log.d("Promt",gasto);
+            Log.d("Data",gastoUsuario.getGasto());
+            if (gastoUsuario.getGasto().toLowerCase().equals(gasto.toLowerCase())) {
+                gastos.add(gastoUsuario);
+                Log.d("ArrayList",String.valueOf(gastos.size()));
+                Log.d("ArrayList",gastoUsuario.getGasto());
             }
         }
-        return null;
+        return gastos;
     }
 
     // Search a gastoUsuario with the fecha
-    public GastoNuevo searchGastoUsuarioFecha(String fecha){
+    public ArrayList<GastoNuevo> searchGastoUsuarioFecha(String fecha){
+        ArrayList<GastoNuevo> gastos = new ArrayList<GastoNuevo>();
         for (GastoNuevo gastoUsuario : gastosUsuario) {
             if (gastoUsuario.getFecha().equals(fecha)) {
-                return gastoUsuario;
+                gastos.add(gastoUsuario);
             }
         }
-        return null;
+        return gastos;
     }
 
     // Search a gastoUsuario with the value
-    public GastoNuevo searchGastoUsuario(Float valor){
+    public ArrayList<GastoNuevo> searchValorUsuario(Float valorInicial, Float valorFinal){
+        ArrayList<GastoNuevo> gastos = new ArrayList<GastoNuevo>();
         for (GastoNuevo gastoUsuario : gastosUsuario) {
-            if (gastoUsuario.getValor().equals(valor)) {
-                return gastoUsuario;
+            if (gastoUsuario.getValor() >= valorInicial && gastoUsuario.getValor() <= valorFinal) {
+                gastos.add(gastoUsuario);
             }
         }
-        return null;
+        return gastos;
     }
-
 
 
 

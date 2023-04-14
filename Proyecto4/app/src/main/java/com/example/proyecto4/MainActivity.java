@@ -67,8 +67,7 @@ public class MainActivity extends AppCompatActivity {
         btnAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get the gasto selected
-                gastoSeleccionado = dropdownGastos.getSelectedItem().toString();
+
                 // Get the date selected, if none show a Toast
                 String fechaSeleccionada = fechaDisplay.getText().toString();
                 if (fechaSeleccionada.equals("AQUI FECHA") || fechaSeleccionada.equals("")) {
@@ -92,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "ERROR NO HAY VALOR", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                // Get the gasto selected
+                gastoSeleccionado = dropdownGastos.getSelectedItem().toString();
+
                 // Create a new GastoNuevo
                 GastoNuevo gastoNuevo = new GastoNuevo(gastoSeleccionado, fechaSeleccionada, valorSeleccionado);
 

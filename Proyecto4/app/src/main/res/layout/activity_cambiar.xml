@@ -34,6 +34,7 @@
         android:layout_marginTop="16dp"
         android:text="ELIMINA UN TIPO DE GASTO"
         android:textSize="48sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,6 +46,7 @@
         android:layout_marginTop="248dp"
         android:text="AGREGAR UN TIPO DE GASTO"
         android:textSize="48sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.39"
         app:layout_constraintStart_toStartOf="parent"
