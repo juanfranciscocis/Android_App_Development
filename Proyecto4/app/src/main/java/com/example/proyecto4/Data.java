@@ -9,6 +9,7 @@ public class Data {
     // Data members
     private ArrayList<String> gastos = new ArrayList<String>();
     private ArrayList<GastoNuevo> gastosUsuario = new ArrayList<GastoNuevo>();
+    private ArrayList<GastoNuevo> sorting = new ArrayList<GastoNuevo>();
 
 
     // Singleton
@@ -49,6 +50,7 @@ public class Data {
     // Delete a gastos with the index
     public void deleteGastos(int index){
         this.gastos.remove(index);
+
     }
 
     // Search a gastoUsuario with the gasto
@@ -63,6 +65,7 @@ public class Data {
                 Log.d("ArrayList",gastoUsuario.getGasto());
             }
         }
+        sorting = gastos;
         return gastos;
     }
 
@@ -74,6 +77,7 @@ public class Data {
                 gastos.add(gastoUsuario);
             }
         }
+        sorting = gastos;
         return gastos;
     }
 
@@ -85,8 +89,28 @@ public class Data {
                 gastos.add(gastoUsuario);
             }
         }
+        sorting = gastos;
         return gastos;
     }
+
+    // Get the total value of the sorting
+    public Float getTotal(){
+        Float total = 0f;
+        for (GastoNuevo gastoUsuario : sorting) {
+            total += gastoUsuario.getValor();
+        }
+        return total;
+    }
+
+    public Float getTotal(ArrayList<GastoNuevo> sorting){
+        Float total = 0f;
+        for (GastoNuevo gastoUsuario : sorting) {
+            total += gastoUsuario.getValor();
+        }
+        return total;
+    }
+
+
 
 
 

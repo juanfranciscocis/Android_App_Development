@@ -37,6 +37,7 @@ public class VerGastosActivity extends AppCompatActivity {
         Button filtroRango = findViewById(R.id.filtroRango);
         TextView menorQue = findViewById(R.id.menorQue);
         TextView mayorQue = findViewById(R.id.mayorQue);
+        TextView total = findViewById(R.id.total);
 
 
         // Go back to the main activity
@@ -52,6 +53,7 @@ public class VerGastosActivity extends AppCompatActivity {
         listView = findViewById(R.id.listViewGastos);
         adapter = new GastosArrayAdapter(this, gastos);
         listView.setAdapter(adapter);
+        total.setText("$"+Data.getInstance().getTotal(Data.getInstance().getGastosUsuario()));
 
 
 
@@ -73,6 +75,7 @@ public class VerGastosActivity extends AppCompatActivity {
                 gastos = Data.getInstance().searchGastoUsuario(gastoSeleccionado);
                 adapter = new GastosArrayAdapter(VerGastosActivity.this, gastos);
                 listView.setAdapter(adapter);
+                total.setText("$"+Data.getInstance().getTotal());
             }
         });
 

@@ -170,7 +170,6 @@
         android:layout_marginTop="656dp"
         android:editable="false"
         android:ems="10"
-        android:inputType="numberDecimal"
         android:text="0.00"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
