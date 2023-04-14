@@ -3,11 +3,13 @@ package com.example.proyecto4;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -98,6 +100,18 @@ public class MainActivity extends AppCompatActivity {
 
                 // Print the new GastoNuevo
                 Log.d("GastoNuevo", gastoNuevo.toString());
+
+                // Show a Toast
+                Toast.makeText(MainActivity.this, "Gasto agregado", Toast.LENGTH_SHORT).show();
+
+                // Close the keyboard
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+                // Clear the text fields
+                fechaDisplay.setText("AQUI FECHA");
+                valor.setText("");
+
             }
         });
 
