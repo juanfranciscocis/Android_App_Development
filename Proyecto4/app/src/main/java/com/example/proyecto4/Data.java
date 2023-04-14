@@ -49,6 +49,17 @@ public class Data {
 
     // Delete a gastos with the index
     public void deleteGastos(int index){
+
+        //If a gastos category is deleted, all the gastos with that category will be deleted
+        int count = 0;
+        while(count < gastosUsuario.size()){
+            if(gastosUsuario.get(count).getGasto().equals(gastos.get(index))){
+                gastosUsuario.remove(count);
+            }else{
+                count++;
+            }
+        }
+        // Delete the gastos category
         this.gastos.remove(index);
 
     }
@@ -109,11 +120,6 @@ public class Data {
         }
         return total;
     }
-
-
-
-
-
 
 
 }

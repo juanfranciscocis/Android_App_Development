@@ -1,11 +1,14 @@
 package com.example.proyecto4;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -51,8 +54,33 @@ public class GastosArrayAdapter extends ArrayAdapter<GastoNuevo> {
         viewHolder.gastoText.setText(model.get(position).getGasto());
         viewHolder.fechaText.setText(model.get(position).getFecha());
         viewHolder.valorText.setText(model.get(position).getValor().toString());
+
+
+        // if click on item, show a toast with the item text
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Show a popup if ok is pressed then delete the item from the list ELSE do nothing
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Eliminar gasto");
+                builder.setMessage("¿Está seguro que desea eliminar este gasto?");
+                builder.setPositiveButton("OK", (dialog, which) -> {
+                    objects.remove(position);
+                    notifyDataSetChanged();
+                    Toast.makeText(context, "Gasto eliminado", Toast.LENGTH_SHORT).show();
+                });
+                builder.setNegativeButton("Cancelar", (dialog, which) -> {
+                    Toast.makeText(context, "Gasto no eliminado", Toast.LENGTH_SHORT).show();
+                });
+                builder.show();
+
+            }
+        });
+
         return convertView;
     }
+
+
 
 
 }

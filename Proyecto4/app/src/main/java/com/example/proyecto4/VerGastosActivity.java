@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -104,11 +105,15 @@ public class VerGastosActivity extends AppCompatActivity {
         filtroRango.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String menor = menorQue.getText().toString();
-                String mayor = mayorQue.getText().toString();
-                gastos = Data.getInstance().searchValorUsuario(Float.valueOf(menor), Float.valueOf(mayor));
-                adapter = new GastosArrayAdapter(VerGastosActivity.this, gastos);
-                listView.setAdapter(adapter);
+                try {
+                    String menor = menorQue.getText().toString();
+                    String mayor = mayorQue.getText().toString();
+                    gastos = Data.getInstance().searchValorUsuario(Float.valueOf(menor), Float.valueOf(mayor));
+                    adapter = new GastosArrayAdapter(VerGastosActivity.this, gastos);
+                    listView.setAdapter(adapter);
+                }catch (Exception e){
+                    Toast.makeText(VerGastosActivity.this, "INGRESO DE DATOS INCORRECTO", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
